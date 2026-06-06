@@ -1,0 +1,14 @@
+{
+  "name": "binger-series-frontend",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Ecosistema Frontend de Binger",
+  "engines": {
+    "node": ">=18.0.0",
+    "pnpm": ">=8.0.0"
+  },
+  "scripts": {
+    "dev:web": "pnpm --filter @binger/web dev",
+    "build:web": "pnpm --filter @binger/web build"
+  }
+}
