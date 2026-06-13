@@ -20,6 +20,9 @@ importers:
         specifier: ^19.2.6
         version: 19.2.7(react@19.2.7)
     devDependencies:
+      '@binger/ui-config':
+        specifier: workspace:*
+        version: link:../../packages/ui-config
       '@eslint/js':
         specifier: ^10.0.1
         version: 10.0.1(eslint@10.4.1(jiti@2.7.0))
@@ -83,6 +86,12 @@ importers:
         version: 24.13.0
       typescript:
         specifier: ^5.5.0
+        version: 5.9.3
+
+  packages/ui-config:
+    devDependencies:
+      typescript:
+        specifier: ^5.0.0
         version: 5.9.3
 
 packages:
