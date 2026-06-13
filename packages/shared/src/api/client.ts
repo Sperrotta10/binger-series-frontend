@@ -1,8 +1,14 @@
 import axios from 'axios';
-import { config } from '../config/env';
+import { env } from '../config/env';
+
+let currentAuthToken: string | null = null;
+
+export const setAuthToken = (token: string | null) => {
+  currentAuthToken = token;
+};
 
 export const apiClient = axios.create({
-  baseURL: `${config.API_BASE_URL}/api`,
+  baseURL: env.API_BASE_URL,
   headers: {
     'Content-Type': 'application/json',
   },
@@ -10,10 +16,9 @@ export const apiClient = axios.create({
 
 apiClient.interceptors.request.use(
   (config) => {
-    // const token = localStorage.getItem('token');
-    // if (token) {
-    //   config.headers.Authorization = `Bearer ${token}`;
-    // }
+    if (currentAuthToken) {
+      config.headers.Authorization = `Bearer ${currentAuthToken}`;
+    }
     return config;
   },
   (error) => Promise.reject(error)
