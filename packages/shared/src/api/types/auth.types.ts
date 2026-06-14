@@ -6,6 +6,8 @@ export interface User {
   avatar_url: string | null;
   biography?: string;
   created_at?: string;
+  followers_count?: number;
+  following_count?: number;
 }
 
 export interface AuthTokens {
