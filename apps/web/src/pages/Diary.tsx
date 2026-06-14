@@ -165,6 +165,22 @@ function StatCard({ icon: Icon, label, value, color }: {
   );
 }
 
+interface ApiLogEntry {
+  log_id?: string;
+  watched_at?: string;
+  is_rewatch?: boolean;
+  rating?: number;
+  liked?: boolean;
+  review?: string;
+  episode_id?: string;
+  episode_title?: string;
+  season_number?: number;
+  episode_number?: number;
+  thumbnail_url?: string;
+  series_id?: string;
+  series_title?: string;
+}
+
 // ── Main Page ─────────────────────────────────────────────────────────────────
 export function Diary() {
   const [entries, setEntries] = useState<DiaryEntryType[]>([]);
@@ -174,7 +190,7 @@ export function Diary() {
     const fetchDiaryData = async () => {
       try {
         const logData = await ActivityService.getWatchLog();
-        const mapped = (logData?.data || []).map((item: any, idx: number) => ({
+        const mapped = (logData?.data || []).map((item: ApiLogEntry, idx: number) => ({
           log_id: item.log_id || `log-${idx}`,
           watched_at: item.watched_at || new Date(Date.now() - idx * 86400000).toISOString(),
           is_rewatch: !!item.is_rewatch,
