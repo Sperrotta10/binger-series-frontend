@@ -3,6 +3,7 @@ import { MainLayout } from '../layouts/MainLayout';
 import { Home } from '../pages/Home';
 import Search from '../pages/Search';
 import { Diary } from '../pages/Diary';
+import { Profile } from '../pages/Profile';
 
 export const router = createBrowserRouter([
   {
@@ -21,7 +22,10 @@ export const router = createBrowserRouter([
         path: "diary",
         element: <Diary />,
       },
-      // Here we will add more routes later (profile, etc.)
+      {
+        path: "profile",
+        element: <Profile />,
+      },
     ],
   },
 ]);
