@@ -26,11 +26,32 @@ export function ProfileRatingChart({ data, loading = false }: ProfileRatingChart
 
   if (loading) {
     return (
-      <div className="flex flex-col gap-sm animate-pulse bg-surface-container rounded-2xl p-md border border-white/5">
-        <div className="h-5 w-40 bg-surface-container-high rounded mb-xs" />
-        <div className="flex items-end gap-[6px] h-24 w-full">
+      <div className="flex flex-col justify-center gap-md animate-pulse bg-surface-container rounded-2xl p-md border border-white/5 h-full"
+        style={{ background: 'linear-gradient(135deg, rgba(31,31,36,0.9) 0%, rgba(18,19,23,0.95) 100%)' }}
+      >
+        {/* Header skeleton */}
+        <div className="flex items-center justify-between">
+          <div className="h-4 w-40 bg-surface-container-high rounded" />
+          <div className="h-3 w-20 bg-surface-container-high rounded" />
+        </div>
+        {/* Bars skeleton */}
+        <div className="flex items-end gap-[5px] h-[88px] w-full mb-sm">
           {Array.from({ length: 10 }).map((_, i) => (
-            <div key={i} className="flex-1 bg-surface-container-high rounded-t-sm" style={{ height: `${SKELETON_HEIGHTS[i]}%` }} />
+            <div key={i} className="flex flex-col items-center gap-[4px] flex-1">
+              <div className="w-full flex flex-col justify-end" style={{ height: '72px' }}>
+                <div className="w-full bg-surface-container-high rounded-t-[3px]" style={{ height: `${SKELETON_HEIGHTS[i]}%` }} />
+              </div>
+              <div className="h-2 w-full bg-surface-container-high rounded" />
+            </div>
+          ))}
+        </div>
+        {/* Stats grid skeleton */}
+        <div className="grid grid-cols-3 gap-xs pt-sm border-t border-white/5">
+          {Array.from({ length: 3 }).map((_, i) => (
+            <div key={i} className="flex flex-col items-center gap-1 p-xs rounded-lg bg-white/5">
+              <div className="h-2 w-16 bg-surface-container-high rounded" />
+              <div className="h-4 w-10 bg-surface-container-high rounded" />
+            </div>
           ))}
         </div>
       </div>

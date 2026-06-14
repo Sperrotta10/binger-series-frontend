@@ -1,5 +1,6 @@
 import { Link, useLocation } from 'react-router-dom';
 import { Home, Search, BookOpen, User, PlusCircle, Settings, HelpCircle } from 'lucide-react';
+import { useQuickLog } from './modals/QuickLogContext';
 
 /** Navigation items for the main sidebar */
 const NAV_ITEMS = [
@@ -11,6 +12,7 @@ const NAV_ITEMS = [
 
 export const Sidebar = () => {
   const { pathname } = useLocation();
+  const { openModal } = useQuickLog();
 
   return (
     <aside className="fixed left-0 top-0 h-full w-64 flex flex-col py-md px-sm bg-surface-container/70 backdrop-blur-[12px] border-r border-white/10 shadow-[0_0_15px_rgba(220,184,255,0.1)] z-50">
@@ -39,7 +41,15 @@ export const Sidebar = () => {
         })}
       </nav>
       <div className="mt-auto space-y-2 pt-md border-t border-white/10">
-        <button className="w-full bg-gradient-to-r from-primary-container to-inverse-primary text-white font-label-md text-label-md py-sm rounded-md shadow-[0_0_15px_rgba(220,184,255,0.3)] hover:shadow-[0_0_20px_rgba(220,184,255,0.5)] hover:scale-[0.98] transition-all duration-200 flex items-center justify-center gap-2 mb-md">
+        <button 
+          onClick={() => openModal({
+            type: 'series',
+            seriesId: 'new-log',
+            title: 'Log Activity',
+            subtitle: 'Select what you watched'
+          })}
+          className="w-full bg-gradient-to-r from-primary-container to-inverse-primary text-white font-label-md text-label-md py-sm rounded-md shadow-[0_0_15px_rgba(220,184,255,0.3)] hover:shadow-[0_0_20px_rgba(220,184,255,0.5)] hover:scale-[0.98] transition-all duration-200 flex items-center justify-center gap-2 mb-md"
+        >
           <PlusCircle size={18} />
           Log an Episode
         </button>
