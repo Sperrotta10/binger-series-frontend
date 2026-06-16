@@ -51,6 +51,28 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     };
   }, []);
 
+  // Proactive Silent Refresh Loop
+  useEffect(() => {
+    let refreshInterval: number | null = null;
+
+    if (user) {
+      // Refresh token every 10 minutes (600,000 ms) before the 15m expiration
+      refreshInterval = window.setInterval(async () => {
+        try {
+          const res = await AuthService.refresh({});
+          setAuthToken(res.data.tokens.accessToken);
+        } catch {
+          // If this background refresh fails, the interceptor will automatically
+          // fire the auth:unauthorized event and handle the logout.
+        }
+      }, 10 * 60 * 1000);
+    }
+
+    return () => {
+      if (refreshInterval) window.clearInterval(refreshInterval);
+    };
+  }, [user]);
+
   const logout = async () => {
     try {
       await AuthService.logout();
