@@ -7,6 +7,9 @@ export const setAuthToken = (token: string | null) => {
   currentAuthToken = token;
 };
 
+export const hasAuthToken = () => !!currentAuthToken;
+export const getAuthToken = () => currentAuthToken;
+
 export const apiClient = axios.create({
   baseURL: env.API_BASE_URL,
   headers: {

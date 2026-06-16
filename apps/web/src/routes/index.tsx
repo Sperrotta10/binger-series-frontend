@@ -4,27 +4,58 @@ import { Home } from '../pages/Home';
 import Search from '../pages/Search';
 import { Diary } from '../pages/Diary';
 import { Profile } from '../pages/Profile';
+import { LoginPage } from '../pages/auth/LoginPage';
+import { RegisterPage } from '../pages/auth/RegisterPage';
+import { ForgotPasswordPage } from '../pages/auth/ForgotPasswordPage';
+import { Landing } from '../pages/Landing';
+import { ProtectedRoute, PublicRoute } from '../components/AuthGuard';
 
 export const router = createBrowserRouter([
   {
-    path: "/",
-    element: <MainLayout />,
+    element: <PublicRoute />,
     children: [
       {
-        index: true,
-        element: <Home />,
+        path: "/",
+        element: <Landing />,
       },
       {
-        path: "search",
-        element: <Search />,
+        path: "/auth/login",
+        element: <LoginPage />,
       },
       {
-        path: "diary",
-        element: <Diary />,
+        path: "/auth/register",
+        element: <RegisterPage />,
       },
       {
-        path: "profile",
-        element: <Profile />,
+        path: "/auth/forgot-password",
+        element: <ForgotPasswordPage />,
+      },
+    ],
+  },
+  {
+    element: <ProtectedRoute />,
+    children: [
+      {
+        path: "/",
+        element: <MainLayout />,
+        children: [
+          {
+            path: "dashboard",
+            element: <Home />,
+          },
+          {
+            path: "search",
+            element: <Search />,
+          },
+          {
+            path: "diary",
+            element: <Diary />,
+          },
+          {
+            path: "profile",
+            element: <Profile />,
+          },
+        ],
       },
     ],
   },
