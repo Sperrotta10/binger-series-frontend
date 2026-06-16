@@ -4,7 +4,7 @@ import { useQuickLog } from './modals/QuickLogContext';
 
 /** Navigation items for the main sidebar */
 const NAV_ITEMS = [
-  { to: '/', label: 'Home', icon: Home },
+  { to: '/dashboard', label: 'Home', icon: Home },
   { to: '/search', label: 'Search', icon: Search },
   { to: '/diary', label: 'Diary', icon: BookOpen },
   { to: '/profile', label: 'Profile', icon: User },
