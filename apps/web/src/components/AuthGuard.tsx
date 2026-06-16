@@ -1,15 +1,27 @@
 import { Navigate, Outlet } from 'react-router-dom';
-import { hasAuthToken } from '@binger/shared';
+import { useAuth } from '../contexts/AuthContext';
 
 export const ProtectedRoute = () => {
-  if (!hasAuthToken()) {
+  const { user, isLoading } = useAuth();
+
+  if (isLoading) {
+    return <div className="h-screen w-screen flex items-center justify-center bg-surface text-primary">Loading...</div>;
+  }
+
+  if (!user) {
     return <Navigate to="/auth/login" replace />;
   }
   return <Outlet />;
 };
 
 export const PublicRoute = () => {
-  if (hasAuthToken()) {
+  const { user, isLoading } = useAuth();
+
+  if (isLoading) {
+    return <div className="h-screen w-screen flex items-center justify-center bg-surface text-primary">Loading...</div>;
+  }
+
+  if (user) {
     return <Navigate to="/dashboard" replace />;
   }
   return <Outlet />;

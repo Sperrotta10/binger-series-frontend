@@ -1,6 +1,7 @@
 import { Link, useLocation } from 'react-router-dom';
-import { Home, Search, BookOpen, User, PlusCircle, Settings, HelpCircle } from 'lucide-react';
+import { Home, Search, BookOpen, User, PlusCircle, Settings, HelpCircle, LogOut } from 'lucide-react';
 import { useQuickLog } from './modals/QuickLogContext';
+import { useAuth } from '../contexts/AuthContext';
 
 /** Navigation items for the main sidebar */
 const NAV_ITEMS = [
@@ -13,6 +14,7 @@ const NAV_ITEMS = [
 export const Sidebar = () => {
   const { pathname } = useLocation();
   const { openModal } = useQuickLog();
+  const { logout } = useAuth();
 
   return (
     <aside className="fixed left-0 top-0 h-full w-64 flex flex-col py-md px-sm bg-surface-container/70 backdrop-blur-[12px] border-r border-white/10 shadow-[0_0_15px_rgba(220,184,255,0.1)] z-50">
@@ -22,7 +24,7 @@ export const Sidebar = () => {
       </div>
       <nav className="flex-1 space-y-2">
         {NAV_ITEMS.map(({ to, label, icon: Icon }) => {
-          const isActive = to === '/' ? pathname === '/' : pathname.startsWith(to);
+          const isActive = (to as string) === '/' ? pathname === '/' : pathname?.startsWith(to);
 
           return (
             <Link
@@ -61,6 +63,13 @@ export const Sidebar = () => {
           <HelpCircle size={20} />
           <span className="font-label-md text-label-md">Support</span>
         </Link>
+        <button 
+          onClick={logout}
+          className="w-full flex items-center gap-sm p-sm text-error/80 hover:text-error hover:bg-error/10 transition-all duration-300 rounded-md text-left"
+        >
+          <LogOut size={20} />
+          <span className="font-label-md text-label-md font-medium">Log out</span>
+        </button>
       </div>
     </aside>
   );
