@@ -2,7 +2,7 @@ export interface User {
   id: string;
   email: string;
   username: string;
-  name: string;
+  fullName: string | null;
   avatar_url: string | null;
   biography?: string;
   created_at?: string;

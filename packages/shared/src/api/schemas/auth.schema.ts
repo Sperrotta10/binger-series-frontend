@@ -1,9 +1,14 @@
 import { z } from 'zod';
 
 export const registerSchema = z.object({
-  email: z.string().email(),
-  password: z.string().min(8),
-  name: z.string().min(1),
+  fullName: z.string().min(1, 'Full name is required').max(50),
+  username: z
+    .string()
+    .min(3, 'At least 3 characters')
+    .max(30, 'Max 30 characters')
+    .regex(/^[a-z0-9_]+$/, 'Lowercase, numbers and _ only'),
+  email: z.string().email('Enter a valid email address'),
+  password: z.string().min(8, 'Password must be at least 8 characters'),
 });
 
 export const loginSchema = z.object({
@@ -29,8 +34,8 @@ export const resetPasswordSchema = z.object({
 });
 
 export const updateProfileSchema = z.object({
-  username: z.string().regex(/^[a-z0-9_]+$/).max(15).optional(),
-  name: z.string().min(1).optional(),
+  username: z.string().min(3).max(30).regex(/^[a-z0-9_]+$/).optional(),
+  fullName: z.string().min(1).max(50).optional(),
   biography: z.string().max(160).optional(),
   avatar_url: z.string().url().optional(),
 });
