@@ -1,4 +1,3 @@
-import React from 'react';
 import { SlidersHorizontal, Heart, MoreHorizontal, Star } from 'lucide-react';
 
 export const FriendActivity = () => {

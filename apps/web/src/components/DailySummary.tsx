@@ -10,7 +10,7 @@ export const DailySummary = () => {
   const strokeDashoffset = circumference * (1 - progress);
 
   return (
-    <div className="col-span-4 sticky top-[calc(64px+80px)] self-start space-y-md">
+    <div className="sticky top-[calc(64px+80px)] self-start space-y-md w-full">
 
       {/* ── Daily Summary ── */}
       <div className="bg-surface-container/70 backdrop-blur-[12px] border border-white/10 p-md rounded-md shadow-[0_0_15px_rgba(220,184,255,0.05)]">
