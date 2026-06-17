@@ -1,13 +1,20 @@
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+import React, { createContext, useContext, useState, type ReactNode } from 'react';
 
 export type QuickLogEntity = {
   type: 'series' | 'season' | 'episode';
   seriesId: string;
   seasonId?: string;
+  seasonNumber?: number;
   episodeId?: string;
+  episodeNumber?: number;
   title: string;
   subtitle?: string;
   posterUrl?: string;
+  mode?: 'create' | 'edit';
+  logId?: string;
+  initialRating?: number;
+  initialReview?: string;
+  initialRewatch?: boolean;
 };
 
 interface QuickLogContextType {
