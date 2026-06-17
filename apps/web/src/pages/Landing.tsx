@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Play, Search, X, ChevronRight, Lock } from 'lucide-react';
 import { SeriesCard } from '../components/SeriesCard';
 
@@ -11,8 +11,7 @@ const trendingShows = [
 ];
 
 export const Landing = () => {
-  const navigate = useNavigate();
-  const [searchQuery, setSearchQuery] = useState('');
+    const [searchQuery, setSearchQuery] = useState('');
   const [showAuthModal, setShowAuthModal] = useState(false);
 
   const handleShowClick = () => {

@@ -123,12 +123,12 @@ function formatGroupLabel(dateStr: string): string {
 // ── Skeleton Row ─────────────────────────────────────────────────────────────
 function SkeletonRow() {
   return (
-    <div className="grid grid-cols-[72px_120px_1fr_160px_80px] items-center gap-md px-md py-sm border-b border-white/5 animate-pulse">
+    <div className="grid grid-cols-[72px_80px_1fr_140px_120px] items-center gap-md px-md py-sm border-b border-white/5 animate-pulse">
       <div className="flex flex-col items-center gap-1">
         <div className="h-6 w-8 bg-surface-container-high rounded" />
         <div className="h-3 w-10 bg-surface-container-high rounded" />
       </div>
-      <div className="w-[104px] h-[68px] bg-surface-container-high rounded-lg" />
+      <div className="w-[72px] aspect-[2/3] bg-surface-container-high rounded-lg" />
       <div className="flex flex-col gap-2">
         <div className="h-4 w-48 bg-surface-container-high rounded" />
         <div className="h-3 w-32 bg-surface-container-high rounded" />
@@ -228,6 +228,10 @@ export function Diary() {
   const avgRating = entries.filter((e) => e.rating).reduce((s, e) => s + e.rating!, 0) /
     (entries.filter((e) => e.rating).length || 1);
 
+  const handleDeleteEntry = (logId: string) => {
+    setEntries((prev) => prev.filter((e) => e.log_id !== logId));
+  };
+
   return (
     <div className="col-span-12 flex flex-col w-full gap-lg py-lg">
 
@@ -272,7 +276,7 @@ export function Diary() {
 
         {/* Table column headers */}
         <div
-          className="grid grid-cols-[72px_120px_1fr_160px_80px] items-center gap-md px-md py-[10px] border-b border-white/10"
+          className="grid grid-cols-[72px_80px_1fr_140px_120px] items-center gap-md px-md py-[10px] border-b border-white/10"
           style={{ background: 'rgba(255,255,255,0.025)' }}
         >
           <span className="text-[11px] font-semibold uppercase tracking-[0.12em] text-on-surface-variant">
@@ -288,7 +292,7 @@ export function Diary() {
             Rating
           </span>
           <span className="text-[11px] font-semibold uppercase tracking-[0.12em] text-on-surface-variant text-right">
-            Tags
+            Actions
           </span>
         </div>
 
@@ -323,7 +327,7 @@ export function Diary() {
                 </span>
               </div>
               {dayEntries.map((entry) => (
-                <DiaryRow key={entry.log_id} entry={entry} />
+                <DiaryRow key={entry.log_id} entry={entry} onDelete={handleDeleteEntry} />
               ))}
             </div>
           ))
