@@ -1,6 +1,6 @@
 import { z } from 'zod';
 import { apiClient } from '../client';
-import {
+import type { 
   watchEpisodeSchema,
   updateWatchLogSchema,
   seriesReviewSchema,
@@ -8,14 +8,14 @@ import {
   episodeReviewSchema,
   updateReviewSchema,
   watchlistToggleSchema,
-} from '../schemas/activity.schema';
-import {
+ } from '../schemas/activity.schema';
+import type { 
   WatchResponse,
   StatsResponse,
   ReviewResponse,
   WatchlistToggleResponse,
   GenericActionResponse,
-} from '../types/activity.types';
+ } from '../types/activity.types';
 
 export const ActivityService = {
   watchEpisode: async (payload: z.infer<typeof watchEpisodeSchema>): Promise<WatchResponse> => {

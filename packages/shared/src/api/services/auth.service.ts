@@ -1,6 +1,6 @@
 import { z } from 'zod';
 import { apiClient } from '../client';
-import {
+import type { 
   registerSchema,
   loginSchema,
   oauthGoogleSchema,
@@ -8,13 +8,13 @@ import {
   forgotPasswordSchema,
   resetPasswordSchema,
   updateProfileSchema,
-} from '../schemas/auth.schema';
-import {
+ } from '../schemas/auth.schema';
+import type { 
   AuthResponse,
   RefreshResponse,
   GenericMessageResponse,
   ProfileResponse,
-} from '../types/auth.types';
+ } from '../types/auth.types';
 
 export const AuthService = {
   register: async (payload: z.infer<typeof registerSchema>): Promise<AuthResponse> => {

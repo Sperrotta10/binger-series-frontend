@@ -1,11 +1,11 @@
 import { z } from 'zod';
 import { apiClient } from '../client';
-import { toggleFollowSchema } from '../schemas/social.schema';
-import {
+import type {  toggleFollowSchema  } from '../schemas/social.schema';
+import type { 
   ToggleFollowResponse,
   ToggleLikeResponse,
   SocialFeedResponse,
-} from '../types/social.types';
+ } from '../types/social.types';
 
 export const SocialService = {
   toggleFollow: async (payload: z.infer<typeof toggleFollowSchema>): Promise<ToggleFollowResponse> => {

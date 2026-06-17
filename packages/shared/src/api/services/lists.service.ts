@@ -1,16 +1,16 @@
 import { z } from 'zod';
 import { apiClient } from '../client';
-import {
+import type { 
   createListSchema,
   updateListSchema,
   updateListItemsSchema,
-} from '../schemas/lists.schema';
-import {
+ } from '../schemas/lists.schema';
+import type { 
   CreateListResponse,
   MyListsResponse,
   ListDetailResponse,
-  GenericActionResponse,
 } from '../types/lists.types';
+import type { GenericActionResponse } from '../types/activity.types';
 
 export const ListsService = {
   createList: async (payload: z.infer<typeof createListSchema>): Promise<CreateListResponse> => {

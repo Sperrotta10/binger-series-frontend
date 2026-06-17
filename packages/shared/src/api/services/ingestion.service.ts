@@ -1,7 +1,7 @@
 import { z } from 'zod';
 import { apiClient } from '../client';
-import { triggerIngestionSchema } from '../schemas/ingestion.schema';
-import { IngestionTriggerResponse, IngestionSyncResponse } from '../types/ingestion.types';
+import type {  triggerIngestionSchema  } from '../schemas/ingestion.schema';
+import type {  IngestionTriggerResponse, IngestionSyncResponse  } from '../types/ingestion.types';
 
 export const IngestionService = {
   trigger: async (payload: z.infer<typeof triggerIngestionSchema>, secretToken: string): Promise<IngestionTriggerResponse> => {
