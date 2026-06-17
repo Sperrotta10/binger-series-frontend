@@ -1,4 +1,3 @@
-import React from 'react';
 import { Settings, Edit2 } from 'lucide-react';
 import type { UserProfile } from '../../types/profile';
 

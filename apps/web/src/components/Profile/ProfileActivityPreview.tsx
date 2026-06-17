@@ -1,4 +1,3 @@
-import React from 'react';
 import { Calendar, Star } from 'lucide-react';
 import type { ActivityEntry } from '../../types/profile';
 

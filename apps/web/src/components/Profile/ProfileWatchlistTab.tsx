@@ -1,4 +1,3 @@
-import React from 'react';
 import { BookMarked } from 'lucide-react';
 import type { WatchlistItem, WatchlistStatus } from '../../types/profile';
 
