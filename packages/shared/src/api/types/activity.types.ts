@@ -26,9 +26,19 @@ export interface StatsResponse {
 
 export interface ReviewEntry {
   review_id: string;
+  user?: {
+    id: string;
+    username: string;
+    profile_image: string | null;
+  };
   rating: number;
+  content: string | null;
   contains_spoilers: boolean;
+  scope: 'SHOW' | 'SEASON' | 'EPISODE';
+  season_number: number | null;
+  episode_number: number | null;
   created_at: string;
+  updated_at: string;
 }
 
 export interface ReviewResponse {

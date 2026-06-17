@@ -52,7 +52,3 @@ export interface ListDetailResponse {
   };
 }
 
-export interface GenericActionResponse {
-  status: string;
-  message?: string;
-}

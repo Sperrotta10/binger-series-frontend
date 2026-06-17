@@ -36,10 +36,35 @@ export interface SearchResult {
   rating_average: number;
 }
 
+/** Returned by GET /api/v1/catalog/hybrid-search */
+export interface HybridSearchResult {
+  /** Local UUID when isImported=true; TVmaze numeric ID (as string) when isImported=false */
+  id: string;
+  /** TVmaze numeric ID — null for legacy local records without an external source */
+  api_id: string | null;
+  title: string;
+  premiered: string | null;
+  genres: string[];
+  poster_url: string | null;
+  rating_average: number;
+  /** true  → record lives in our local DB (use UUID for navigation)
+   *  false → record only exists on TVmaze (JIT import needed on click) */
+  isImported: boolean;
+}
+
+export interface HybridSearchResponse {
+  status: string;
+  results_count: number;
+  data: HybridSearchResult[];
+}
+
+
 export interface TrendingSeries {
   id: string;
+  external_id?: number;
+  is_imported: boolean;
   title: string;
-  poster_url: string;
+  poster_url: string | null;
   rating_average: number;
   weekly_views_count: number;
 }
