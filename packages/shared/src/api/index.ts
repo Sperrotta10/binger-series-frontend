@@ -1,5 +1,5 @@
 export { env } from '../config/env';
-export { apiClient, setAuthToken, hasAuthToken, getAuthToken } from './client';
+export { apiClient, setAuthToken, restoreAuthToken, hasAuthToken, getAuthToken } from './client';
 
 export * from './schemas/auth.schema';
 export * from './schemas/catalog.schema';
