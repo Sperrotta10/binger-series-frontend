@@ -1,4 +1,3 @@
-import React from 'react';
 import { SlidersHorizontal, ChevronDown, X } from 'lucide-react';
 
 export interface FilterState {
