@@ -1,11 +1,12 @@
 /* eslint-disable react-refresh/only-export-components */
 import { createContext, useContext, useEffect, useState } from 'react';
-import { AuthService, setAuthToken } from '@binger/shared';
+import { AuthService, restoreAuthToken, setAuthToken, hasAuthToken } from '@binger/shared';
 import type { User } from '@binger/shared';
 
 interface AuthContextType {
   user: User | null;
   isLoading: boolean;
+  isAuthenticated: boolean;
   logout: () => Promise<void>;
   setUser: (user: User | null) => void;
 }
@@ -19,12 +20,21 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
     const initAuth = async () => {
       try {
-        // Try to refresh token silently
+        restoreAuthToken();
+
+        if (hasAuthToken()) {
+          try {
+            const profileRes = await AuthService.getProfile();
+            setUser(profileRes.data.user);
+            return;
+          } catch {
+            setAuthToken(null);
+          }
+        }
+
         const res = await AuthService.refresh({});
-        const accessToken = res.data.tokens.accessToken;
-        setAuthToken(accessToken);
-        
-        // Fetch user profile if refresh succeeded
+        setAuthToken(res.data.tokens.accessToken);
+
         const profileRes = await AuthService.getProfile();
         setUser(profileRes.data.user);
       } catch {
@@ -37,11 +47,12 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
     initAuth();
 
-    // Listen for unauthorized events from interceptor
     const handleUnauthorized = () => {
       setAuthToken(null);
       setUser(null);
-      window.location.href = '/auth/login';
+      if (!window.location.pathname.startsWith('/auth/')) {
+        window.location.href = '/auth/login';
+      }
     };
 
     window.addEventListener('auth:unauthorized', handleUnauthorized);
@@ -51,25 +62,22 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     };
   }, []);
 
-  // Proactive Silent Refresh Loop
   useEffect(() => {
-    let refreshInterval: number | null = null;
+    let refreshInterval: ReturnType<typeof setInterval> | null = null;
 
     if (user) {
-      // Refresh token every 10 minutes (600,000 ms) before the 15m expiration
-      refreshInterval = window.setInterval(async () => {
+      refreshInterval = setInterval(async () => {
         try {
           const res = await AuthService.refresh({});
           setAuthToken(res.data.tokens.accessToken);
         } catch {
-          // If this background refresh fails, the interceptor will automatically
-          // fire the auth:unauthorized event and handle the logout.
+          // Interceptor handles session expiry on the next protected request.
         }
       }, 10 * 60 * 1000);
     }
 
     return () => {
-      if (refreshInterval) window.clearInterval(refreshInterval);
+      if (refreshInterval) clearInterval(refreshInterval);
     };
   }, [user]);
 
@@ -85,12 +93,16 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     }
   };
 
-  if (isLoading) {
-    return <div className="h-screen w-screen flex items-center justify-center bg-surface text-primary">Loading...</div>; // Could be a cooler loader
-  }
-
   return (
-    <AuthContext.Provider value={{ user, isLoading, logout, setUser }}>
+    <AuthContext.Provider
+      value={{
+        user,
+        isLoading,
+        isAuthenticated: !!user,
+        logout,
+        setUser,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );
